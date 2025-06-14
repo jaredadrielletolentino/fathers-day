@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Father's Day</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 25%, #1a252f 50%, #2c3e50 75%, #34495e 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(52, 73, 94, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(44, 62, 80, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(26, 37, 47, 0.2) 0%, transparent 50%);
+            animation: backgroundPulse 6s ease-in-out infinite;
+            z-index: -2;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 0;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: #ecf0f1;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+            margin-bottom: 10px;
+            animation: glow 2s ease-in-out infinite alternate, titleFloat 4s ease-in-out infinite;
+            background: linear-gradient(45deg, #3498db, #2ecc71, #f39c12, #e74c3c);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate, titleFloat 4s ease-in-out infinite, colorShift 3s ease-in-out infinite;
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            color: #bdc3c7;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.5s forwards, subtitleWave 3s ease-in-out infinite 2s;
+        }
+
+        .photo-gallery {
+            display: grid;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .photo-card {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-radius: 20px;
+            box-shadow: 
+                0 10px 30px rgba(0,0,0,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.6);
+            overflow: hidden;
+            transform: translateY(50px) rotateX(10deg);
+            opacity: 0;
+            animation: slideUp 0.8s ease-out forwards, cardFloat 6s ease-in-out infinite;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .photo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
+            z-index: 1;
+        }
+
+        .photo-card:hover::before {
+            left: 100%;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-15px) rotateX(0deg) scale(1.03);
+            box-shadow: 
+                0 25px 50px rgba(0,0,0,0.4),
+                0 0 30px rgba(52, 152, 219, 0.3);
+        }
+
+        .photo-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .photo-card:nth-child(1) {
+            animation: slideUp 0.8s ease-out 0.2s forwards, cardFloat 6s ease-in-out infinite;
+        }
+
+        .photo-card:nth-child(2) {
+            animation: slideUp 0.8s ease-out 0.4s forwards, cardFloat 6s ease-in-out infinite 2s;
+        }
+
+        .photo-card:nth-child(3) {
+            animation: slideUp 0.8s ease-out 0.6s forwards, cardFloat 6s ease-in-out infinite 4s;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-caption {
+            padding: 20px;
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+        }
+
+        .message-section {
+            background: linear-gradient(145deg, rgba(236, 240, 241, 0.95), rgba(189, 195, 199, 0.9));
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.2),
+                inset 0 1px 0 rgba(255,255,255,0.6);
+            transform: scale(0.8) rotateY(10deg);
+            opacity: 0;
+            animation: popIn 1s ease-out 1s forwards, sectionBreath 4s ease-in-out infinite 2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(52, 152, 219, 0.1), transparent);
+            animation: rotate 8s linear infinite;
+            z-index: -1;
+        }
+
+        .message-section h2 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: bounce 2s ease-in-out infinite, textGlow 3s ease-in-out infinite alternate;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .message-section p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #34495e;
+            margin-bottom: 15px;
+        }
+
+        .heart {
+            color: #e74c3c;
+            font-size: 2rem;
+            animation: heartbeat 1.5s ease-in-out infinite, heartSpin 4s ease-in-out infinite;
+            display: inline-block;
+            margin: 20px 0;
+            filter: drop-shadow(0 0 10px rgba(231, 76, 60, 0.6));
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: rgba(231, 76, 60, 0.4);
+            font-size: 20px;
+            animation: float 6s ease-in-out infinite, heartTwirl 3s ease-in-out infinite;
+        }
+
+        /* Geometric shapes floating animation */
+        .geometric-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 25px solid #3498db;
+            animation: floatShape 12s ease-in-out infinite, rotate 8s linear infinite;
+        }
+
+        .square {
+            width: 20px;
+            height: 20px;
+            background: #2ecc71;
+            animation: floatShape 10s ease-in-out infinite, rotate 6s linear infinite reverse;
+        }
+
+        .circle {
+            width: 18px;
+            height: 18px;
+            background: #f39c12;
+            border-radius: 50%;
+            animation: floatShape 14s ease-in-out infinite, pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes colorShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes subtitleWave {
+            0%, 100% { transform: translateX(0px); }
+            25% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-8px) rotateX(2deg); }
+        }
+
+        @keyframes sectionBreath {
+            0%, 100% { transform: scale(1) rotateY(0deg); }
+            50% { transform: scale(1.02) rotateY(1deg); }
+        }
+
+        @keyframes textGlow {
+            from { text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+            to { text-shadow: 2px 2px 20px rgba(52, 152, 219, 0.6); }
+        }
+
+        @keyframes heartSpin {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(5deg) scale(1.1); }
+            50% { transform: rotate(0deg) scale(1.2); }
+            75% { transform: rotate(-5deg) scale(1.1); }
+        }
+
+        @keyframes heartTwirl {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes floatShape {
+            0% {
+                transform: translateY(100vh) translateX(0px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.1;
+            }
+            50% {
+                transform: translateY(50vh) translateX(20px);
+                opacity: 0.1;
+            }
+            90% {
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(-20px);
+                opacity: 0;
+            }
+        }
+
+        /* Add these missing keyframes */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg);
+            }
+        }
+
+        @keyframes popIn {
+            to {
+                opacity: 1;
+                transform: scale(1) rotateY(0deg);
+            }
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+            }
+            to {
+                text-shadow: 3px 3px 25px rgba(52, 152, 219, 0.8);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1rem;
+            }
+
+            .photo-card img {
+                height: 250px;
+            }
+
+            .message-section {
+                padding: 25px;
+            }
+
+            .message-section h2 {
+                font-size: 2rem;
+            }
+
+            .message-section p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .photo-card img {
+                height: 200px;
+            }
+
+            .message-section {
+                padding: 20px;
+            }
+
+            .message-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .message-section p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts"></div>
+    <div class="geometric-shapes"></div>
+    
+    <div class="container">
+        <div class="hero">
+            <h1>Happy Father's Day</h1>
+            <p class="subtitle">To the most amazing dad in the world</p>
+        </div>
+
+        <div class="photo-gallery">
+            <div class="photo-card">
+                <img src="./img/img-2.jpg" alt="Father and Son Together">
+                <div class="photo-caption">Quality time with dad - creating memories that last forever</div>
+            </div>
+
+            <div class="photo-card">
+                <img src="./img/img-4.jpg" alt="Father and Daughter Together">
+                <div class="photo-caption">Quality time with dad - creating memories that last forever</div>
+            </div>
+
+            <div class="photo-card">
+                <img src="./img/img-3.jpg" alt="Family Adventure at St. Bernard of Baguio">
+                <div class="photo-caption">Family adventures together - exploring new places and making memories</div>
+            </div>
+
+            <div class="photo-card">
+                <img src="./img/img-1.jpg" alt="Beach Day with Dad">
+                <div class="photo-caption">Perfect beach day - enjoying life's simple pleasures together</div>
+            </div>
+        </div>
+
+        <div class="message-section">
+            <h2>Dear Dad</h2>
+            <div class="heart">♥</div>
+            <p>Thank you for being my constant, my mentor, and my hero. Your strength, kindness, and unwavering support have helped shape the person I am today.</p>
+            <p>From life lessons to shared laughs and unforgettable moments, the time and love you've given me are gifts beyond measure.</p>
+            <p>Every memory we've made is a treasure I carry with pride. You're more than just my dad — you're my role model and my closest friend.</p>
+            <p><strong>Wishing a Happy Father's Day to the greatest dad anyone could ever ask for!</strong></p>
+            <div class="heart">♥</div>
+            <p><em>With endless love and heartfelt thanks</em></p>
+
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts animation
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerHTML = '♥';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 6 + 's';
+            heart.style.animationDuration = (Math.random() * 3 + 6) + 's';
+            
+            document.querySelector('.floating-hearts').appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 9000);
+        }
+
+        // Create floating geometric shapes
+        function createFloatingShape() {
+            const shapes = ['triangle', 'square', 'circle'];
+            const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+            
+            const shape = document.createElement('div');
+            shape.className = `shape ${randomShape}`;
+            shape.style.left = Math.random() * 100 + '%';
+            shape.style.animationDelay = Math.random() * 8 + 's';
+            shape.style.animationDuration = (Math.random() * 5 + 10) + 's';
+            
+            document.querySelector('.geometric-shapes').appendChild(shape);
+            
+            setTimeout(() => {
+                shape.remove();
+            }, 15000);
+        }
+
+        // Create floating hearts periodically
+        setInterval(createFloatingHeart, 2000);
+        
+        // Create floating shapes periodically
+        setInterval(createFloatingShape, 3000);
+
+        // Add parallax effect on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero');
+            const speed = scrolled * 0.5;
+            
+            if (parallax) {
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+
+            // Enhanced scroll-triggered animations
+            const cards = document.querySelectorAll('.photo-card');
+            cards.forEach((card, index) => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    card.style.transform = 'translateY(0) rotateX(0deg)';
+                    card.style.opacity = '1';
+                    
+                    // Add staggered animation delay
+                    setTimeout(() => {
+                        card.style.animation += `, cardFloat 6s ease-in-out infinite ${index * 2}s`;
+                    }, 500);
+                }
+            });
+        });
+
+        // Add mouse move effect for interactive elements
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            const hero = document.querySelector('.hero h1');
+            if (hero) {
+                const moveX = (mouseX - 0.5) * 20;
+                const moveY = (mouseY - 0.5) * 20;
+                hero.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            }
+        });
+
+        // Add click effect for hearts
+        document.addEventListener('click', (e) => {
+            for (let i = 0; i < 5; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '♥';
+                heart.style.position = 'fixed';
+                heart.style.left = e.clientX + 'px';
+                heart.style.top = e.clientY + 'px';
+                heart.style.color = '#e74c3c';
+                heart.style.fontSize = '20px';
+                heart.style.pointerEvents = 'none';
+                heart.style.zIndex = '1000';
+                heart.style.animation = `clickHeart 1s ease-out forwards`;
+                heart.style.animationDelay = i * 0.1 + 's';
+                
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 1000);
+            }
+        });
+
+        // Add click heart animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes clickHeart {
+                0% {
+                    transform: scale(0) rotate(0deg);
+                    opacity: 1;
+                }
+                50% {
+                    transform: scale(1.2) rotate(180deg);
+                    opacity: 0.8;
+                }
+                100% {
+                    transform: scale(0) rotate(360deg) translateY(-50px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
